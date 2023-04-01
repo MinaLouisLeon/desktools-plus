@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Desktools Plus",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
