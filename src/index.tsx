@@ -3,12 +3,23 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-
+import "tachyons";
+import "antd/dist/reset.css";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import { store } from "./store";
+const persistor = persistStore(store);
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {/* <RouterProvider router={router} /> */}
+        <App />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 
