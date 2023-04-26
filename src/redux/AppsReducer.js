@@ -8,6 +8,7 @@ const initialState = {
       multiWindowAllowed: false,
       numberOfWindow: 0,
       zIndex: 0,
+      iconName : "settings"
     },
   ],
   appsData: [],
@@ -18,19 +19,23 @@ const AppsReducer = createSlice({
   initialState,
   reducers: {
     actionOpenApp: (state, action) => {
-      console.log(action.payload.appName)
-      console.log(state.apps)
       let indexOfApp = state.apps.findIndex(
         (app) => app.appName === action.payload.appName
       );
-      console.log(indexOfApp)
       if (state.apps[indexOfApp].multiWindowAllowed) {
         state.appsData.push({
           appName: action.payload.appName,
-          appKey: `${action.payload.appKey}-${state.apps[indexOfApp].numberOfWindow + 1}`,
+          appKey: `${action.payload.appName}-${
+            state.apps[indexOfApp].numberOfWindow + 1
+          }`,
+          isFullscreen : false,
+          isHidden : false,
+          iconName : state.apps[indexOfApp].iconName,
           zIndex: state.lastZindex + 1,
           dataGrid: {
-            i: `${action.payload.appKey}-${state.apps[indexOfApp].numberOfWindow + 1}`,
+            i: `${action.payload.appName}-${
+              state.apps[indexOfApp].numberOfWindow + 1
+            }`,
             x: 0,
             y: 0,
             w: 4,
@@ -42,14 +47,22 @@ const AppsReducer = createSlice({
           },
         });
         state.lastZindex = state.lastZindex + 1;
-        state.apps[indexOfApp].numberOfWindow = state.apps[indexOfApp].numberOfWindow + 1;
+        state.apps[indexOfApp].numberOfWindow =
+          state.apps[indexOfApp].numberOfWindow + 1;
       } else if (state.apps[indexOfApp].numberOfWindow === 0) {
         state.appsData.push({
           appName: action.payload.appName,
-          appKey: `${action.payload.appKey}-${state.apps[indexOfApp].numberOfWindow + 1}`,
+          appKey: `${action.payload.appName}-${
+            state.apps[indexOfApp].numberOfWindow + 1
+          }`,
+          isFullscreen : false,
+          isHidden : false,
+          iconName : state.apps[indexOfApp].iconName,
           zIndex: state.lastZindex + 1,
           dataGrid: {
-            i: `${action.payload.appKey}-${state.apps[indexOfApp].numberOfWindow + 1}`,
+            i: `${action.payload.appName}-${
+              state.apps[indexOfApp].numberOfWindow + 1
+            }`,
             x: 0,
             y: 0,
             w: 4,
@@ -61,15 +74,18 @@ const AppsReducer = createSlice({
           },
         });
         state.lastZindex = state.lastZindex + 1;
-        state.apps[indexOfApp].numberOfWindow = state.apps[indexOfApp].numberOfWindow + 1;
+        state.apps[indexOfApp].numberOfWindow =
+          state.apps[indexOfApp].numberOfWindow + 1;
       }
     },
     actionUpdateZindex: (state, action) => {
       let index = state.appsData.findIndex(
         (app) => app.appKey === action.payload
       );
-      state.appsData[index].zIndex = state.lastZindex + 1;
-      state.lastZindex = state.lastZindex + 1;
+      if (index !== -1) {
+        state.appsData[index].zIndex = state.lastZindex + 1;
+        state.lastZindex = state.lastZindex + 1;
+      }
     },
     actionUpdateDataGrid: (state, action) => {
       // eslint-disable-next-line
@@ -77,6 +93,17 @@ const AppsReducer = createSlice({
         let appDataIndex = state.appsData.findIndex(
           (app) => app.appKey === item.i
         );
+        state.appsData[appDataIndex].lastDataGrid = {
+          i: state.appsData[appDataIndex].dataGrid.i,
+          x: state.appsData[appDataIndex].dataGrid.x,
+          y: state.appsData[appDataIndex].dataGrid.y,
+          w: state.appsData[appDataIndex].dataGrid.w,
+          h: state.appsData[appDataIndex].dataGrid.h,
+          minH: 4,
+          maxH: 9,
+          minW: 4,
+          maxW: 12,
+        };
         state.appsData[appDataIndex].dataGrid = {
           i: item.i,
           x: item.x,
@@ -90,9 +117,72 @@ const AppsReducer = createSlice({
         };
       });
     },
+    actionCloseApp: (state, action) => {
+      let appDataIndex = state.appsData.findIndex(
+        (app) => app.appKey === action.payload.appKey
+      );
+      state.appsData.splice(appDataIndex, 1);
+      let appIndex = state.apps.findIndex(
+        (app) => app.appName === action.payload.appName
+      );
+      state.apps[appIndex].numberOfWindow =
+        state.apps[appIndex].numberOfWindow - 1;
+    },
+    actionMaxApp : (state,action) => {
+      let appDataIndex = state.appsData.findIndex(app => app.appKey === action.payload.appKey);
+      state.appsData[appDataIndex].lastDataGrid = {
+        i: state.appsData[appDataIndex].dataGrid.i,
+        x: state.appsData[appDataIndex].dataGrid.x,
+        y: state.appsData[appDataIndex].dataGrid.y,
+        w: state.appsData[appDataIndex].dataGrid.w,
+        h: state.appsData[appDataIndex].dataGrid.h,
+        minH: 4,
+        maxH: 9,
+        minW: 4,
+        maxW: 12,
+      };
+      state.appsData[appDataIndex].dataGrid = {
+        i : action.payload.appKey,
+        x : 0,
+        y : 0,
+        w : 12,
+        h : 9,
+        minH: 4,
+        maxH: 9,
+        minW: 4,
+        maxW: 12,
+      }
+      state.appsData[appDataIndex].isFullscreen = true
+    },
+    actionMinApp : (state,action) => {
+      let appDataIndex = state.appsData.findIndex(app => app.appKey === action.payload.appKey);
+      state.appsData[appDataIndex].dataGrid = {
+        i : state.appsData[appDataIndex].lastDataGrid.i,
+        x: state.appsData[appDataIndex].lastDataGrid.x,
+        y: state.appsData[appDataIndex].lastDataGrid.y,
+        w: state.appsData[appDataIndex].lastDataGrid.w,
+        h: state.appsData[appDataIndex].lastDataGrid.h,
+        minH: 4,
+        maxH: 9,
+        minW: 4,
+        maxW: 12,
+      }
+      state.appsData[appDataIndex].isFullscreen = false;
+    },
+    actionHideApp : (state,action) => {
+      let appDataIndex = state.appsData.findIndex(app => app.appKey === action.payload);
+      state.appsData[appDataIndex].isHidden = !state.appsData[appDataIndex].isHidden
+    }
   },
 });
 
-export const { actionOpenApp, actionUpdateZindex, actionUpdateDataGrid } =
-  AppsReducer.actions;
+export const {
+  actionOpenApp,
+  actionUpdateZindex,
+  actionUpdateDataGrid,
+  actionCloseApp,
+  actionMaxApp,
+  actionMinApp,
+  actionHideApp
+} = AppsReducer.actions;
 export default AppsReducer.reducer;

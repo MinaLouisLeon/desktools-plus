@@ -1,6 +1,6 @@
 import React from "react";
-// import "./Home.css";
-import Taskbar from "../../components/shared/Taskbar/Taskbar";
+import "./Home.css";
+import Taskbar from "../../components/Taskbar/Taskbar";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { ScreenOrientation } from "@awesome-cordova-plugins/screen-orientation";
@@ -9,6 +9,7 @@ import AppHeader from "../../components/shared/AppHeader/AppHeader";
 import styled from "styled-components";
 import { useSelector ,useDispatch} from "react-redux";
 import { actionUpdateDataGrid, actionUpdateZindex } from "../../redux/AppsReducer";
+import Settings from "../../Apps/Settings/Settings";
 const BackgroundComp = styled.div`
   position: fixed;
   top: 0;
@@ -33,9 +34,8 @@ const GridItemsContainer = styled.div`
   overflow: auto;
 `;
 const WindowComp = styled.div`
-  /* display: ${(props) => (props.isMin ? "none" : "block")}; */
+  display : ${(props) => props.isHidden ? "none" : "block"};
   z-index: ${(props) => props.zIndex};
-  display: block;
   border-top-left-radius: 0.7rem;
   border-top-right-radius: 0.7rem;
   border-bottom-left-radius: 0.5rem;
@@ -55,6 +55,14 @@ const Home = () => {
   const dispatch = useDispatch(null);
   const ResponsiveGridLayout = WidthProvider(Responsive);
   const appsData = useSelector((state) => state.AppsReducer.appsData);
+  const handleSelctedApp = (appName) => {
+    switch (appName) {
+      case "Settings":
+        return <Settings />
+      default:
+        break;
+    }
+  }
   return (
     <BackgroundComp>
       <WorkareaComp>
@@ -77,6 +85,7 @@ const Home = () => {
             onResizeStop={(layout) => dispatch(actionUpdateDataGrid(layout))}
           >
             {appsData.map((app) => {
+              console.log(app.iconName)
               return (
                 <WindowComp
                   onClick={() => dispatch(actionUpdateZindex(app.appKey))}
@@ -84,9 +93,10 @@ const Home = () => {
                   key={`${app.appKey}`}
                   data-grid={app.dataGrid}
                   zIndex={app.zIndex}
+                  isHidden={app.isHidden}
                 >
-                  <AppHeader appName={app.appName}/>
-                  <AppContentContainer />
+                  <AppHeader appName={app.appName} iconName={app.iconName} appKey={app.appKey} isFullscreen={app.isFullscreen}/>
+                  <AppContentContainer>{handleSelctedApp(app.appName)}</AppContentContainer>
                 </WindowComp>
               );
             })}
