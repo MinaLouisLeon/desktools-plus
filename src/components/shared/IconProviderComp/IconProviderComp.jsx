@@ -1,12 +1,16 @@
 import React from "react";
 import { IconContext } from "react-icons";
-import { FcEngineering } from "react-icons/fc";
+import { FcEngineering ,FcCalculator,FcSelfServiceKiosk} from "react-icons/fc";
 
 const IconProviderComp = ({ iconName, settings }) => {
   const selectIcon = () => {
     switch (iconName) {
       case "settings":
         return <FcEngineering />;
+      case "calc":
+        return <FcCalculator />
+      case "background" :
+        return <FcSelfServiceKiosk />
       default:
         return <></>;
     }

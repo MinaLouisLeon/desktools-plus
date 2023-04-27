@@ -8,16 +8,17 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import AppHeader from "../../components/shared/AppHeader/AppHeader";
 import styled from "styled-components";
 import { useSelector ,useDispatch} from "react-redux";
-import { actionUpdateDataGrid, actionUpdateZindex } from "../../redux/AppsReducer";
+import { actionUpdateDataGrid } from "../../redux/AppsReducer";
 import Settings from "../../Apps/Settings/Settings";
+import Calculator from "../../Apps/Calculator/Calculator";
 const BackgroundComp = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  /* background-color: ${(props) => props.backgroundColor};
-  background-image: ${(props) => props.backgroundImage}; */
+  background-color: ${(props) => props.backgroundColor};
+  background-image: ${(props) => props.backgroundImage};
 `;
 const WorkareaComp = styled.div`
   position: fixed;
@@ -55,16 +56,22 @@ const Home = () => {
   const dispatch = useDispatch(null);
   const ResponsiveGridLayout = WidthProvider(Responsive);
   const appsData = useSelector((state) => state.AppsReducer.appsData);
+  const homeBackground = useSelector(state => state.settingsReducer.homeBackground);
   const handleSelctedApp = (appName) => {
     switch (appName) {
       case "Settings":
         return <Settings />
+      case "Calculator":
+        return <Calculator />
       default:
         break;
     }
   }
   return (
-    <BackgroundComp>
+    <BackgroundComp
+      backgroundColor={homeBackground.backgroundColor}
+      backgroundImage={homeBackground.backgroundImage}
+    >
       <WorkareaComp>
         <GridItemsContainer>
           <ResponsiveGridLayout
@@ -88,7 +95,7 @@ const Home = () => {
               console.log(app.iconName)
               return (
                 <WindowComp
-                  onClick={() => dispatch(actionUpdateZindex(app.appKey))}
+                  // onClick={() => dispatch(actionUpdateZindex(app.appKey))}
                   className="shadow-2"
                   key={`${app.appKey}`}
                   data-grid={app.dataGrid}

@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Button, ButtonGroup, Icon } from "@blueprintjs/core";
 import { useDispatch } from "react-redux";
+// eslint-disable-next-line
 import ContextMenuComp from "../ContextMenuComp/ContextMenuComp";
 import {
   actionCloseApp,
   actionHideApp,
   actionMaxApp,
   actionMinApp,
+  actionUpdateZindex,
 } from "../../../redux/AppsReducer";
 import IconProviderComp from "../IconProviderComp/IconProviderComp";
 const HeaderContainer = styled.div`
@@ -32,7 +34,7 @@ const HeaderBtns = styled.div`
 const AppHeader = ({ appName, appKey, iconName, isFullscreen }) => {
   const dispatch = useDispatch(null);
   return (
-    <HeaderContainer className="pl2">
+    <HeaderContainer className="pl2" onClick={() => dispatch(actionUpdateZindex(appKey))}>
       <HeaderTitle>
         <IconProviderComp iconName={iconName} settings={{size:"1.5rem"}}/>
         <div className="ml2">{appName}</div>
@@ -45,6 +47,7 @@ const AppHeader = ({ appName, appKey, iconName, isFullscreen }) => {
           />
           {isFullscreen ? (
             <Button
+              intent="primary"
               icon="minimize"
               onClick={() => dispatch(actionMinApp({ appKey: appKey }))}
             />
@@ -52,6 +55,7 @@ const AppHeader = ({ appName, appKey, iconName, isFullscreen }) => {
             <Button
               onClick={() => dispatch(actionMaxApp({ appKey: appKey }))}
               icon="maximize"
+              intent="primary"
             />
           )}
 

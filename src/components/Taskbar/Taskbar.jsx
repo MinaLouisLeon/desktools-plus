@@ -3,7 +3,7 @@ import "./Taskbar.css";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { actionHideApp, actionOpenApp } from "../../redux/AppsReducer";
+import { actionHideApp } from "../../redux/AppsReducer";
 import MainMenuComp from "../MainMenuComp/MainMenuComp";
 import IconProviderComp from "../shared/IconProviderComp/IconProviderComp";
 const Taskbar = () => {
@@ -21,22 +21,11 @@ const Taskbar = () => {
   }, [isLoggedIn]);
   return (
     <div className="taskbarContainer shadow-1">
-      {/* <motion.div
-        className="taskbarIconContainer shadow-1"
-        whileHover={{scale: 1.2,y:-15}}
-        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        whileTap={{rotateZ:360}}
-        onClick={() => handleAppClick("settings")}
-      >
-        <IconContext.Provider value={{ size: "2.5rem" }}>
-          <FcEngineering />
-        </IconContext.Provider>
-      </motion.div> */}
       <MainMenuComp />
       {appsData && appsData.map((app) => {
         return(
           <motion.div
-            className="taskbarIconContainer shadow-1 ml3"
+            className="taskbarIconContainer ml3"
             whileHover={{scale:1.2,y:-15}}
             transition={{type:"spring",stiffness:400,damping:10}}
             whileTap={{rotateZ:360}}
