@@ -3,7 +3,6 @@ import { Button,ButtonGroup } from '@blueprintjs/core';
 import { useDispatch,useSelector } from 'react-redux';
 import { actionSetTaxPage, actionTaxAddTempValues, actionTaxGoBack } from '../../../redux/taxReducer';
 import styled from "styled-components";
-import AddedValueCalc from './AddedValueCalc';
 const Container = styled.div`
   overflow: auto;
   position: absolute;

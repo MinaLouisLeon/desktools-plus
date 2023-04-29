@@ -1,4 +1,4 @@
-import { FormGroup, InputGroup, ButtonGroup, Button } from "@blueprintjs/core";
+import { ButtonGroup, Button } from "@blueprintjs/core";
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,9 +27,6 @@ const ButtonContainer = styled.div`
 const AddedValueBillSummary = () => {
   const dispatch = useDispatch(null);
   const billData = useSelector((state) => state.taxReducer.addedValue.tempData);
-  const handleSubmitNewBill = (e) => {
-    e.preventDefault();
-  };
   return (
     <>
       <HeaderContainer>

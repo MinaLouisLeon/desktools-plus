@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ButtonGroup, Button } from "@blueprintjs/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   actionSetTaxPage,
   actionTaxAddTempValues,

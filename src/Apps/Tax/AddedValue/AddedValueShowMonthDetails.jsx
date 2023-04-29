@@ -19,11 +19,6 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   justify-content: flex-end;
 `;
-const ListItem = styled.li`
-  cursor: pointer;
-  text-decoration: underline;
-  color: blue;
-`;
 const AddedValueShowMonthDetails = () => {
   const dispatch = useDispatch(null);
   const userIndex = useSelector(
