@@ -19,7 +19,6 @@ const Item = styled.div`
     cursor: pointer;
 `
 const ItemGridComp = ({items,children}) => {
-    console.log(children)
   return (
     <ItemsContainer>
         {items && items.map((item) => {
@@ -28,7 +27,7 @@ const ItemGridComp = ({items,children}) => {
                     onClick={() => item.handler()}
                 >
                     <IconProviderComp 
-                        iconName="background"
+                        iconName={item.icon}
                         settings={{
                             size : "1.8rem"
                         }}

@@ -4,6 +4,21 @@ const initialState = {
   lastZindex: 0,
   apps: [
     {
+      appName: "Tax",
+      multiWindowAllowed: false,
+      numberOfWindow: 0,
+      zIndex: 0,
+      iconName: "tax",
+      x: 0,
+      y: 0,
+      w: 4,
+      h: 4,
+      minH: 4,
+      maxH: 9,
+      minW: 4,
+      maxW: 12,
+    },
+    {
       appName: "Calculator",
       multiWindowAllowed: false,
       numberOfWindow: 0,
@@ -203,6 +218,57 @@ const AppsReducer = createSlice({
       state.appsData[appDataIndex].isHidden =
         !state.appsData[appDataIndex].isHidden;
     },
+    actionCloseAllApps : (state,action) => {
+      state.lastZindex = 0;
+      state.appsData = [];
+      state.apps = [
+        {
+          appName: "Tax",
+          multiWindowAllowed: false,
+          numberOfWindow: 0,
+          zIndex: 0,
+          iconName: "tax",
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+          minH: 4,
+          maxH: 9,
+          minW: 4,
+          maxW: 12,
+        },
+        {
+          appName: "Calculator",
+          multiWindowAllowed: false,
+          numberOfWindow: 0,
+          zIndex: 0,
+          iconName: "calc",
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 7,
+          minH: 7,
+          maxH: 9,
+          minW: 4,
+          maxW: 12,
+        },
+        {
+          appName: "Settings",
+          multiWindowAllowed: false,
+          numberOfWindow: 0,
+          zIndex: 0,
+          iconName: "settings",
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+          minH: 4,
+          maxH: 9,
+          minW: 4,
+          maxW: 12,
+        },
+      ]
+    }
   },
 });
 
@@ -214,5 +280,6 @@ export const {
   actionMaxApp,
   actionMinApp,
   actionHideApp,
+  actionCloseAllApps
 } = AppsReducer.actions;
 export default AppsReducer.reducer;

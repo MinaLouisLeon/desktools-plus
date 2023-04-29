@@ -3,9 +3,13 @@ import "./Taskbar.css";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { actionHideApp } from "../../redux/AppsReducer";
+import { actionCloseAllApps, actionHideApp } from "../../redux/AppsReducer";
 import MainMenuComp from "../MainMenuComp/MainMenuComp";
 import IconProviderComp from "../shared/IconProviderComp/IconProviderComp";
+import logout from "./icons8-logout-58.png";
+import {auth} from "../../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
+import { actionUserLogOut } from "../../redux/loggedInUserReducer";
 const Taskbar = () => {
   const dispatch = useDispatch(null);
   const history = useHistory();
@@ -19,9 +23,19 @@ const Taskbar = () => {
     }
     //eslint-disable-next-line
   }, [isLoggedIn]);
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      history.replace('/')
+      dispatch(actionCloseAllApps())
+      dispatch(actionUserLogOut())
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
   return (
     <div className="taskbarContainer shadow-1">
-      <MainMenuComp />
+      <div style={{display:"flex",alignItems:"center"}}><MainMenuComp />
       {appsData && appsData.map((app) => {
         return(
           <motion.div
@@ -37,7 +51,18 @@ const Taskbar = () => {
             />
           </motion.div>
         )
-      })}
+      })}</div>
+      <div className="mr2">
+        <motion.div
+          className="logoutContainer"
+          whileHover={{ scale: 1.2, y: -15 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        whileTap={{ rotateZ: 360 }}
+        onClick={() => handleSignOut()}
+        >
+          <img src={logout} alt="logout"/>
+        </motion.div>
+      </div>
     </div>
   );
 };

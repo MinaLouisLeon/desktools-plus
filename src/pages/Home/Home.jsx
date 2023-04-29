@@ -11,6 +11,7 @@ import { useSelector ,useDispatch} from "react-redux";
 import { actionUpdateDataGrid } from "../../redux/AppsReducer";
 import Settings from "../../Apps/Settings/Settings";
 import Calculator from "../../Apps/Calculator/Calculator";
+import Tax from "../../Apps/Tax/Tax";
 const BackgroundComp = styled.div`
   position: fixed;
   top: 0;
@@ -63,6 +64,8 @@ const Home = () => {
         return <Settings />
       case "Calculator":
         return <Calculator />
+      case "Tax":
+        return <Tax />
       default:
         break;
     }
@@ -79,7 +82,8 @@ const Home = () => {
             cols={{ lg: 12 }}
             margin={[10, 10]}
             containerPadding={[1, 1]}
-            rowHeight={30}
+            // rowHeight={30}
+            rowHeight={60}
             compactType={null}
             draggableHandle=".dragHandlerClass"
             isDraggable={true}
@@ -92,7 +96,6 @@ const Home = () => {
             onResizeStop={(layout) => dispatch(actionUpdateDataGrid(layout))}
           >
             {appsData.map((app) => {
-              console.log(app.iconName)
               return (
                 <WindowComp
                   // onClick={() => dispatch(actionUpdateZindex(app.appKey))}

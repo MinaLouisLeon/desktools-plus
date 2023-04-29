@@ -13,9 +13,23 @@
     flex-direction: row;
     flex-wrap: wrap;
     padding-left: 1rem;
+    justify-content: space-between;
 }
 
 .taskbarIconContainer {
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    /* border-radius: 50%;
+    background-color: #eee; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.logoutContainer {
     cursor: pointer;
     height: 2.5rem;
     width: 2.5rem;

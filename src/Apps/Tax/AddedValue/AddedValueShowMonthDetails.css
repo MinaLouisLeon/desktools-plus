@@ -1,0 +1,21 @@
+table {
+    margin-top: 1rem;
+    width: 100%;
+    border-style: solid;
+    border-width: thin;
+  }
+  
+  th {
+    border-style: solid;
+    border-width: thin;
+  }
+  
+  td {
+    border-style: solid;
+    border-width: thin;
+    text-align: center;
+  }
+  
+  .totalBills {
+    background-color: yellowgreen;
+  }

@@ -35,10 +35,10 @@ const Login = () => {
           dispatch(actionUserLoggedIn({ uid: user.uid, email: user.email }));
           history.push('/Home');
         } else {
-          console.log("no user");
+          // console.log("no user");
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     });
     //eslint-disable-next-line

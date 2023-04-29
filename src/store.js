@@ -6,23 +6,24 @@ import loggedInUserReducer from "./redux/loggedInUserReducer";
 import AppsReducer from "./redux/AppsReducer";
 import calculatorReducer from "./redux/calculatorReducer";
 import settingsReducer from "./redux/settingsReducer";
+import taxReducer from "./redux/taxReducer";
 const reducers = combineReducers({
     loggedInUserReducer,
     AppsReducer,
     calculatorReducer,
-    settingsReducer
-    
+    settingsReducer,
+    taxReducer,
 });
 
 const persistConfig = {
     key : "root",
     storage,
-    whitelist : ['AppsReducer','calculatorReducer','settingsReducer']
+    whitelist : ['loggedInUserReducer','AppsReducer','calculatorReducer','settingsReducer','taxReducer']
 }
 
 const persistedReducer = persistReducer(persistConfig,reducers);
 
 export const store = configureStore({
     reducer : persistedReducer,
-    devTools : true
+    devTools : false
 })
