@@ -1,17 +1,19 @@
 import React from "react";
 import "./Home.css";
-import Taskbar from "../../components/Taskbar/Taskbar";
+import Taskbar from "../../../components/Taskbar/Taskbar";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { ScreenOrientation } from "@awesome-cordova-plugins/screen-orientation";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import AppHeader from "../../components/shared/AppHeader/AppHeader";
+import AppHeader from "../../../components/shared/AppHeader/AppHeader";
 import styled from "styled-components";
 import { useSelector ,useDispatch} from "react-redux";
-import { actionUpdateDataGrid } from "../../redux/AppsReducer";
-import Settings from "../../Apps/Settings/Settings";
-import Calculator from "../../Apps/Calculator/Calculator";
-import Tax from "../../Apps/Tax/Tax";
+import { actionUpdateDataGrid } from "../../../redux/AppsReducer";
+import Settings from "../../../Apps/Settings/Settings";
+import Calculator from "../../../Apps/Calculator/Calculator";
+import MapsXYconventer from "../../../Apps/Maps/MapsXYconventer";
+import Tax from "../../../Apps/Tax/Tax";
+import { IonPage } from "@ionic/react";
 const BackgroundComp = styled.div`
   position: fixed;
   top: 0;
@@ -66,12 +68,15 @@ const Home = () => {
         return <Calculator />
       case "Tax":
         return <Tax />
+        case "Maps X,Y Conventer" :
+          return <MapsXYconventer />
       default:
         break;
     }
   }
   return (
-    <BackgroundComp
+    <IonPage>
+      <BackgroundComp
       backgroundColor={homeBackground.backgroundColor}
       backgroundImage={homeBackground.backgroundImage}
     >
@@ -115,6 +120,7 @@ const Home = () => {
         <Taskbar />
       </WorkareaComp>
     </BackgroundComp>
+    </IonPage>
   );
 };
 

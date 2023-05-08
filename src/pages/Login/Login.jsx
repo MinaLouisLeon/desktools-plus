@@ -6,9 +6,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { actionUserLoggedIn } from "../../redux/loggedInUserReducer";
 import { useHistory } from "react-router";
+import { IonPage } from "@ionic/react";
 const Login = () => {
-  const history=useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
+  const mode = useSelector((state) => state.AppsReducer.mode);
   const isLoggedIn = useSelector(
     (state) => state.loggedInUserReducer.isLoggedIn
   );
@@ -25,7 +27,11 @@ const Login = () => {
           email: user.email,
         })
       );
-      history.push('/Home')
+      if (mode === "mobile") {
+        history.push("/mobile");
+      } else if (mode === "desktop") {
+        history.push("/Home");
+      }
     });
   };
   useEffect(() => {
@@ -33,7 +39,11 @@ const Login = () => {
       try {
         if (user) {
           dispatch(actionUserLoggedIn({ uid: user.uid, email: user.email }));
-          history.push('/Home');
+          if (mode === "mobile") {
+            history.push("/mobile");
+          } else if (mode === "desktop") {
+            history.push("/Home");
+          }
         } else {
           // console.log("no user");
         }
@@ -44,7 +54,7 @@ const Login = () => {
     //eslint-disable-next-line
   }, []);
   return (
-    <>
+    <IonPage>
       {!isLoggedIn && (
         <div className="loginContainer">
           <div className="shadow-2 br2 pa4">
@@ -84,7 +94,7 @@ const Login = () => {
           </div>
         </div>
       )}
-    </>
+    </IonPage>
   );
 };
 

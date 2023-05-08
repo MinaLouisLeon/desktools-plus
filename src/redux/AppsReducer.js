@@ -2,7 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   lastZindex: 0,
+  mode : 'mobile',
+  mobileOpenedApp : 'home',
+  mobileApps : ['Maps X,Y Conventer','Tax','Calculator'],
   apps: [
+    {
+      appName: "Maps X,Y Conventer",
+      multiWindowAllowed: false,
+      numberOfWindow: 0,
+      zIndex: 0,
+      iconName: "MapsXYconventer",
+      x: 0,
+      y: 0,
+      w: 4,
+      h: 4,
+      minH: 4,
+      maxH: 9,
+      minW: 4,
+      maxW: 12,
+    },
     {
       appName: "Tax",
       multiWindowAllowed: false,
@@ -223,6 +241,21 @@ const AppsReducer = createSlice({
       state.appsData = [];
       state.apps = [
         {
+          appName: "Maps X,Y Conventer",
+          multiWindowAllowed: false,
+          numberOfWindow: 0,
+          zIndex: 0,
+          iconName: "MapsXYconventer",
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+          minH: 4,
+          maxH: 9,
+          minW: 4,
+          maxW: 12,
+        },
+        {
           appName: "Tax",
           multiWindowAllowed: false,
           numberOfWindow: 0,
@@ -268,12 +301,24 @@ const AppsReducer = createSlice({
           maxW: 12,
         },
       ]
+    },
+    actionMobileOpenApp : (state,action) => {
+      state.mobileOpenedApp = action.payload
+    },
+    actionMobileCloseApp : (state,action) => {
+      state.mobileOpenedApp = 'home' 
+    },
+    actionChangeMode : (state,action) => {
+      state.mode = action.payload
     }
   },
 });
 
 export const {
   actionOpenApp,
+  actionChangeMode,
+  actionMobileCloseApp,
+  actionMobileOpenApp,
   actionUpdateZindex,
   actionUpdateDataGrid,
   actionCloseApp,
